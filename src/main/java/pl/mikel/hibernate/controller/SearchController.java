@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.mikel.hibernate.search.HibernateSearchService;
 import pl.mikel.insurance.dao.InsuranceDao;
 import pl.mikel.mail.service.MailService;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,9 +20,9 @@ public class SearchController {
     private MailService mailService;
 
     @Autowired
-    SearchController(HibernateSearchService hibernateSearchService, MailService mailService){
-        this.hibernateSearchService=hibernateSearchService;
-        this.mailService=mailService;
+    SearchController(HibernateSearchService hibernateSearchService, MailService mailService) {
+        this.hibernateSearchService = hibernateSearchService;
+        this.mailService = mailService;
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -32,17 +31,17 @@ public class SearchController {
         List<InsuranceDao> searchResult = null;
         List<InsuranceDao> insuranceSearch = null;
 
-        try{
+        try {
 
-            searchResult =  hibernateSearchService.search(searchPhrase);
-            insuranceSearch = searchResult.stream().filter(insuranceDao -> insuranceDao.getActualUser().equals(mailService.getEmailAdress())).collect(Collectors.toList());
+            searchResult = hibernateSearchService.search(searchPhrase.toLowerCase());
+            insuranceSearch = searchResult.stream()
+                    .filter(insuranceDao -> insuranceDao.getActualUser()
+                            .equals(mailService.getEmailAdress()))
+                    .collect(Collectors.toList());
 
-
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-
 
         model.addAttribute("search", insuranceSearch);
 

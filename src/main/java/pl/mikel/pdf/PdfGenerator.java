@@ -8,6 +8,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.w3c.tidy.Tidy;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import pl.mikel.insurance.dao.InsuranceDao;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+
 import static org.thymeleaf.templatemode.TemplateMode.HTML;
 
 @Service
@@ -73,9 +75,9 @@ public class PdfGenerator {
     public boolean checkInsurancePdfIsPresent(Long id) throws IOException {
         try (Stream<Path> paths = Files.walk(Paths.get("src/main/resources/pdf/"))) {
 
-        return paths.filter(Files::isRegularFile)
+            return paths.filter(Files::isRegularFile)
                     .anyMatch(path -> path.toString()
-                            .replaceAll("[^\\d]","")
+                            .replaceAll("[^\\d]", "")
                             .equals(String.valueOf(id)));
         }
 

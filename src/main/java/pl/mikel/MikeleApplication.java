@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
 import java.util.Collections;
 
-
 @SpringBootApplication
 @EnableAsync
 public class MikeleApplication  {

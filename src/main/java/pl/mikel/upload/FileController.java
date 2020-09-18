@@ -17,6 +17,7 @@ import pl.mikel.insurance.dao.InsuranceDao;
 import pl.mikel.insurance.repository.InsuranceRepository;
 import pl.mikel.insurance.service.InsuranceService;
 import pl.mikel.mail.service.MailService;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,21 +36,21 @@ public class FileController {
 
 
     @Autowired
-    FileController (FileService fileService,
-                    InsuranceRepository insuranceRepository,
-                    MailService mailService,
-                    InsuranceService insuranceService){
+    FileController(FileService fileService,
+                   InsuranceRepository insuranceRepository,
+                   MailService mailService,
+                   InsuranceService insuranceService) {
 
-        this.fileService=fileService;
-        this.insuranceRepository=insuranceRepository;
-        this.mailService=mailService;
-        this.insuranceService=insuranceService;
+        this.fileService = fileService;
+        this.insuranceRepository = insuranceRepository;
+        this.mailService = mailService;
+        this.insuranceService = insuranceService;
 
     }
 
 
     @GetMapping("/uploadClients")
-    public ModelAndView uploadClients(){
+    public ModelAndView uploadClients() {
 
         return new ModelAndView("upload");
     }
@@ -58,22 +59,21 @@ public class FileController {
     @PostMapping("/uploadFile")
     public String uploadFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) throws Exception {
 
-        String pathToFile = "src/main/resources/uploaded_files/"+file.getOriginalFilename();
+        String pathToFile = "src/main/resources/uploaded_files/" + file.getOriginalFilename();
 
         try {
-            if(Objects.requireNonNull(file.getOriginalFilename())
-                   .endsWith(".csv")) {
+            if (Objects.requireNonNull(file.getOriginalFilename())
+                    .endsWith(".csv")) {
 
                 fileService.uploadFile(file);
-            }
-            else throw new IllegalArgumentException("Njoe csv");
-            List<InsuranceDao> testing =   ReadDataFromCsv.readData(pathToFile,mailService.getEmailAdress());
+            } else throw new IllegalArgumentException("Njoe csv");
+            List<InsuranceDao> testing = ReadDataFromCsv.readData(pathToFile, mailService.getEmailAdress());
 
 
             for (InsuranceDao insuranceDao : testing) {
 
                 insuranceDao.setPrice(
-                                insuranceService.calculateInsurance(
+                        insuranceService.calculateInsurance(
                                 insuranceDao.getYearOfProduction(),
                                 insuranceDao.getFuel(),
                                 insuranceDao.getCapacity(),
@@ -83,23 +83,23 @@ public class FileController {
                                 insuranceDao.getMileage(),
                                 insuranceDao.getUsage()
                         ));
-                               insuranceRepository.saveAll(testing);
+                insuranceRepository.saveAll(testing);
 
             }
 
             redirectAttributes.addFlashAttribute("message",
-                    "File "+ file.getOriginalFilename()+" has been uploaded to the server: " );
+                    "File " + file.getOriginalFilename() + " has been uploaded to the server: ");
 
-        }catch (Exception ex ){
+        } catch (Exception ex) {
             ex.printStackTrace();
-            if(file.isEmpty()){
+            if (file.isEmpty()) {
                 redirectAttributes.addFlashAttribute("failed",
                         "No file was selected");
-            }else
-            redirectAttributes.addFlashAttribute("failed",
-                    "Invalid file structure: " + file.getOriginalFilename());
+            } else
+                redirectAttributes.addFlashAttribute("failed",
+                        "Invalid file structure: " + file.getOriginalFilename());
         }
-           return "redirect:/uploadClients";
+        return "redirect:/uploadClients";
 
     }
 

@@ -2,6 +2,7 @@ package pl.mikel.insurance.dao;
 
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Field;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -53,20 +54,21 @@ public class InsuranceDao {
     private Double price;
 
 
-    public InsuranceDao(){
+    public InsuranceDao() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
 
-    public long getId(){
+    public long getId() {
         return id;
     }
 
-    public void setId(long id){
-        this.id=id;
+    public void setId(long id) {
+        this.id = id;
     }
+
     @Field
     @Column(name = "fuel")
     public String getFuel() {
@@ -152,21 +154,22 @@ public class InsuranceDao {
 
     @Column(name = "actualUser")
     @Field
-    public String getActualUser(){
+    public String getActualUser() {
         return actualUser;
     }
-    public void setActualUser(String actualUser){
-        this.actualUser=actualUser;
+
+    public void setActualUser(String actualUser) {
+        this.actualUser = actualUser;
     }
 
     @Column(name = "price")
     @Field
-    public Double getPrice(){
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price){
-        this.price=price;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     @Column(name = "clientName")
@@ -225,7 +228,6 @@ public class InsuranceDao {
     public void setYearOfProduction(Integer yearOfProduction) {
         this.yearOfProduction = yearOfProduction;
     }
-
 
 
 }

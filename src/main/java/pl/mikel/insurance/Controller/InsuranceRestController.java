@@ -11,11 +11,12 @@ import pl.mikel.insurance.repository.InsuranceRepository;
 import pl.mikel.insurance.service.InsuranceService;
 import pl.mikel.mail.service.MailService;
 import pl.mikel.security.repository.UserRoleRepository;
-
 import java.util.List;
 
+//TEST
 @RestController
 public class InsuranceRestController {
+    /*
     List<InsuranceDao> insurances;
     @Autowired
     public InsuranceRepository insuranceRepository;
@@ -31,13 +32,13 @@ public class InsuranceRestController {
 
 
     @RequestMapping("/showInsurance")
-    public List<InsuranceDao> showAlles(){
-       insurances = insuranceRepository.findAll();
-       return insurances;
+    public List<InsuranceDao> showAlles() {
+        insurances = insuranceRepository.findAll();
+        return insurances;
     }
 
     @RequestMapping("/showInsurance/{id}")
-    public List<InsuranceDao> insurances(@PathVariable Long id){
+    public List<InsuranceDao> insurances(@PathVariable Long id) {
 
 
         insurances = insuranceRepository.findAllByIdAndActualUser(id, mailService.getEmailAdress());
@@ -46,17 +47,17 @@ public class InsuranceRestController {
     }
 
     @RequestMapping("/page/{number}")
-    public List<InsuranceDao> numberOfPage(@PathVariable int number){
+    public List<InsuranceDao> numberOfPage(@PathVariable int number) {
 
 
-        Pageable paging = PageRequest.of(number,5,Sort.by("id"));
+        Pageable paging = PageRequest.of(number, 5, Sort.by("id"));
 
-        Page<InsuranceDao> paged =  insuranceRepository.findAllByActualUser(mailService.getEmailAdress(),paging);
+        Page<InsuranceDao> paged = insuranceRepository.findAllByActualUser(mailService.getEmailAdress(), paging);
 
 
         System.out.println(paged.getTotalElements());
 
         return paged.getContent();
     }
-
+*/
 }

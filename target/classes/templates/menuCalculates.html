@@ -89,6 +89,10 @@
 
     <form action="#" th:action="@{/search}" th:object="${search}" method="get">
 
+        <div th:if="${#lists.isEmpty(search)}">
+            <p>There is no customer information, </p>
+            <p>please make a <strong>calculation </strong>or <strong>import clients</strong> </p>
+        </div>
         <div th:if="${not #lists.isEmpty(search)}">
             <h2>Calculate result</h2>
             <table id="insurance_table">

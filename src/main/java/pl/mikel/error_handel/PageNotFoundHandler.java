@@ -10,21 +10,21 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class PageNotFoundHandler implements WebMvcConfigurer{
+public class PageNotFoundHandler implements WebMvcConfigurer {
 
-        @Override
-        public void addViewControllers(ViewControllerRegistry registry) {
-            registry.addViewController("/error.html").setViewName("error");
-        }
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/error.html").setViewName("error");
+    }
 
 
-        @Bean
-        public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
-            return container ->
+    @Bean
+    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
+        return container ->
                 container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error.html"));
 
 
-        }
     }
+}
 
 

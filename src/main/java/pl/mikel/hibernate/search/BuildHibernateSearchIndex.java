@@ -18,8 +18,8 @@ public class BuildHibernateSearchIndex
     private EntityManager entityManager;
 
     @Autowired
-    public BuildHibernateSearchIndex(EntityManagerFactory entityManagerFactory){
-        this.entityManager=entityManagerFactory.createEntityManager();
+    public BuildHibernateSearchIndex(EntityManagerFactory entityManagerFactory) {
+        this.entityManager = entityManagerFactory.createEntityManager();
     }
 
     @Override
@@ -28,12 +28,10 @@ public class BuildHibernateSearchIndex
             FullTextEntityManager fullTextEntityManager =
                     Search.getFullTextEntityManager(entityManager);
             fullTextEntityManager.createIndexer().startAndWait();
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             System.out.println(
                     "An error occurred trying to build the serach index: " +
                             e.toString());
         }
     }
-
 }

@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,13 +22,13 @@ public class FileService {
 
         try {
             Path copyLocation = Paths
-                .get(DIRECTORY + File.separator + StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())));
+                    .get(DIRECTORY + File.separator + StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())));
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
             getFileName = file.getOriginalFilename();
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Could not store file " + file.getOriginalFilename()
-                + ". Please try again!");
+                    + ". Please try again!");
         }
     }
 

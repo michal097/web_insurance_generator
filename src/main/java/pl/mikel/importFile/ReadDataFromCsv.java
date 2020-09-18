@@ -1,5 +1,7 @@
 package pl.mikel.importFile;
+
 import pl.mikel.insurance.dao.InsuranceDao;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,7 +10,7 @@ import java.util.List;
 
 public class ReadDataFromCsv {
 
-    public static List<InsuranceDao> readData(String file, String actualUser){
+    public static List<InsuranceDao> readData(String file, String actualUser) {
         String line = "";
         String cvsSplitBy = ";";
         List<InsuranceDao> massUpload = new ArrayList<>();
@@ -18,10 +20,10 @@ public class ReadDataFromCsv {
 
             while ((line = bufferedReader.readLine()) != null) {
                 count++;           //nie czyta pierwszej linii
-                if(count==1){      //w pliku, bo jest zarezerwowana
+                if (count == 1) {  //w pliku, bo jest zarezerwowana
                     continue;      //na nagłówek
                 }
-                InsuranceDao insuranceDao= new InsuranceDao();
+                InsuranceDao insuranceDao = new InsuranceDao();
 
                 String[] insuranceData = line.split(cvsSplitBy);
                 insuranceDao.setClientName(insuranceData[0]);

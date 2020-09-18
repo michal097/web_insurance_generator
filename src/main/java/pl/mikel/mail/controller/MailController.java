@@ -55,20 +55,20 @@ public class MailController {
 
             Optional<InsuranceDao> findIdInRepo = insuranceRepository.findById(id);
 
-                if (findIdInRepo.isPresent()) {
+            if (findIdInRepo.isPresent()) {
 
-                    if(!pdfGenerator.checkInsurancePdfIsPresent(id)) {
-                        pdfGenerator.generatePdf(email.get(0), id);
-                    }
+                if (!pdfGenerator.checkInsurancePdfIsPresent(id)) {
+                    pdfGenerator.generatePdf(email.get(0), id);
+                }
                 mailService.sendSimpleMail(mailService.getEmailAdress(),
                         "Insurance number " + id, body, id);
 
                 redirectAttributes.addFlashAttribute("message", "Insurance has been correctly generated and sent to the email address: " + mailService.getEmailAdress());
 
             } else {
-                    redirectAttributes.addFlashAttribute("failed", "Insurance could not be sent to the email address: " + mailService.getEmailAdress());
-                    }
-         }
+                redirectAttributes.addFlashAttribute("failed", "Insurance could not be sent to the email address: " + mailService.getEmailAdress());
+            }
+        }
         return "redirect:/showById/{id}";
     }
 }

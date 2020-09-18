@@ -25,26 +25,26 @@ public class LoadInsuranceDetailsController {
     private MailService mailService;
     private PdfGenerator pdfGenerator;
 
-    LoadInsuranceDetailsController(InsuranceRepository insuranceRepository, MailService mailService, PdfGenerator pdfGenerator){
+    LoadInsuranceDetailsController(InsuranceRepository insuranceRepository, MailService mailService, PdfGenerator pdfGenerator) {
 
-        this.insuranceRepository=insuranceRepository;
-        this.mailService=mailService;
-        this.pdfGenerator=pdfGenerator;
+        this.insuranceRepository = insuranceRepository;
+        this.mailService = mailService;
+        this.pdfGenerator = pdfGenerator;
     }
 
 
     @RequestMapping("/myAllCalculates/page/{pagination}")
-    public String showMyAllCalculates(@PathVariable("pagination")int pagination,  Model model){
+    public String showMyAllCalculates(@PathVariable("pagination") int pagination, Model model) {
 
         int recordsPerPage = 5;
 
-        Pageable paging = PageRequest.of(pagination,recordsPerPage, Sort.by("id"));
+        Pageable paging = PageRequest.of(pagination, recordsPerPage, Sort.by("id"));
         //in case user enter in URL value which is bigger than pagination pages
-        if((insuranceRepository.countAllByActualUser(mailService.getEmailAdress())/recordsPerPage)<pagination) {
+        if ((insuranceRepository.countAllByActualUser(mailService.getEmailAdress()) / recordsPerPage) < pagination) {
             return "error";
         }
 
-        Page<InsuranceDao> paged =  insuranceRepository.findAllByActualUser(mailService.getEmailAdress(),paging);
+        Page<InsuranceDao> paged = insuranceRepository.findAllByActualUser(mailService.getEmailAdress(), paging);
 
         model.addAttribute("pagination", paged.getContent());
         model.addAttribute("pagin", paged.getTotalPages());
@@ -54,7 +54,7 @@ public class LoadInsuranceDetailsController {
     }
 
     @RequestMapping("/myLastCalculate")
-    public String showMyLastCalculate(Model model){
+    public String showMyLastCalculate(Model model) {
         List<InsuranceDao> myLastCalculate = insuranceRepository.findFirstByActualUserOrderByIdDesc(mailService.getEmailAdress());
         model.addAttribute("search", myLastCalculate);
 
@@ -65,8 +65,8 @@ public class LoadInsuranceDetailsController {
     public String searchInsuranceById(@PathVariable("id") long id, Model model) throws IOException {
         InsuranceDao insuranceDao = insuranceRepository.findAllByIdAndActualUser(id, mailService.getEmailAdress()).get(0);
 
-      model.addAttribute("search", insuranceDao);
-      model.addAttribute("is_pdf_present", pdfGenerator.checkInsurancePdfIsPresent(id));
+        model.addAttribute("search", insuranceDao);
+        model.addAttribute("is_pdf_present", pdfGenerator.checkInsurancePdfIsPresent(id));
 
         return "insuranceDetails";
     }
@@ -74,13 +74,13 @@ public class LoadInsuranceDetailsController {
     @GetMapping
     @RequestMapping("/deleteById/{id}")
     @Transactional
-    public String delete (@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
+    public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 
 
-            insuranceRepository.deleteAllByIdAndActualUser(id, mailService.getEmailAdress());
-            redirectAttributes.addFlashAttribute("successfullyDeleted", "Insurance number: " + id + " has been deleted" );
+        insuranceRepository.deleteAllByIdAndActualUser(id, mailService.getEmailAdress());
+        redirectAttributes.addFlashAttribute("successfullyDeleted", "Insurance number: " + id + " has been deleted");
 
         return "redirect:/myAllCalculates/page/0";
     }
-    
+
 }

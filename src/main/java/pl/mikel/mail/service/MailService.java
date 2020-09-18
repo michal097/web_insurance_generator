@@ -37,8 +37,8 @@ public class MailService {
             helper.setSubject(subject);
             helper.setText(content, true);
 
-            FileSystemResource fileSystemResource = new FileSystemResource("src/main/resources/pdf/insurance_number"+ docNumber +".pdf");
-            helper.addAttachment(Objects.requireNonNull(fileSystemResource.getFilename()),fileSystemResource);
+            FileSystemResource fileSystemResource = new FileSystemResource("src/main/resources/pdf/insurance_number" + docNumber + ".pdf");
+            helper.addAttachment(Objects.requireNonNull(fileSystemResource.getFilename()), fileSystemResource);
 
         } catch (MessagingException ex) {
             ex.printStackTrace();
@@ -47,13 +47,12 @@ public class MailService {
         javaMailSender.send(msg);
     }
 
-    public String getEmailAdress(){
+    public String getEmailAdress() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
 
     }
-
 
 
 }

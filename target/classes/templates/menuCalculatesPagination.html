@@ -109,7 +109,7 @@
     <form action="#" th:action="@{/pagination}" th:object="${pagination}" method="get">
         <div th:if="${#lists.isEmpty(pagination)}">
             <p>There is no customer information, </p>
-            <p>please make a calculation or import customers </p>
+            <p>please make a <strong>calculation </strong>or <strong>import clients</strong> </p>
         </div>
         <div th:if="${not #lists.isEmpty(pagination)}">
             <h2>Calculate result</h2>

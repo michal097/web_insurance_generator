@@ -16,6 +16,7 @@ import pl.mikel.mail.service.MailService;
 import pl.mikel.security.model.User;
 import pl.mikel.security.repository.UserRepository;
 import pl.mikel.security.service.UserService;
+
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -37,21 +38,21 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String home(Model model){
+    public String home(Model model) {
 
-      boolean isPresent =  SecurityContextHolder.getContext().getAuthentication() != null &&
-                           SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
-                           !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken);
-        if(isPresent){
+        boolean isPresent = SecurityContextHolder.getContext().getAuthentication() != null &&
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
+                !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken);
+        if (isPresent) {
             User user = userRepository.findByEmail(mailService.getEmailAdress());
-            model.addAttribute("user", user );
+            model.addAttribute("user", user);
             return "homeuser";
         } else
-        return "home";
+            return "home";
     }
 
     @GetMapping("/logmeout")
-    public String logoff(@ModelAttribute InsuranceDao insuranceDao){
+    public String logoff(@ModelAttribute InsuranceDao insuranceDao) {
 
         SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 
@@ -74,19 +75,18 @@ public class HomeController {
                           BindingResult bindResult) {
 
         Optional<User> findEmail = Optional.ofNullable(userRepository.findByEmail(user.getEmail()));
-        if(findEmail.isPresent()){
+        if (findEmail.isPresent()) {
             ObjectError objectError = new ObjectError(user.getEmail(), "zly mail");
             bindResult.addError(objectError);
             user.setEmail("");
 
         }
-        if(bindResult.hasErrors()) {
+        if (bindResult.hasErrors()) {
             return "registerForm";
-        }
-        else {
+        } else {
 
-            user.setFirstName(user.getFirstName().substring(0,1).toUpperCase() + user.getFirstName().substring(1).toLowerCase());
-            user.setLastName(user.getLastName().substring(0,1).toUpperCase() + user.getLastName().substring(1).toLowerCase());
+            user.setFirstName(user.getFirstName().substring(0, 1).toUpperCase() + user.getFirstName().substring(1).toLowerCase());
+            user.setLastName(user.getLastName().substring(0, 1).toUpperCase() + user.getLastName().substring(1).toLowerCase());
 
             userService.addWithDefaultRole(user);
 
@@ -95,18 +95,19 @@ public class HomeController {
 
 
     }
+
     @GetMapping("/loginform")
     public String loginForm() {
         return "login_form";
     }
 
     @GetMapping("/create_pdf.pdf")
-    public String getPdfFile(){
+    public String getPdfFile() {
         return "homeuser";
     }
 
     @RequestMapping(value = "/login_failed")
-    public String loginFailture(){
+    public String loginFailture() {
         return "login_failed";
     }
 
