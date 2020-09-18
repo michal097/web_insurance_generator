@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Moja appka</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href=@{/css/style.css} type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+</head>
+
+<body>
+<div class="header">
+    <h1> Insure yourself </h1>
+    <h3> --generator </h3>
+</div>
+
+
+
+<div class="navbar" id="navbar">
+    <a class="active" th:href="@{/}"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a th:href="@{/show}"><i class="fa fa-calculator" aria-hidden="true"></i> Create calculate </a>
+    <a th:href="@{/showCalculate}"><i class="fa fa-fw fa-envelope"></i>Send Mail</a>
+
+    <div class="search-container">
+        <form action="#" th:action="@{/search}" th:object="${search}" >
+            <label for="search_input"></label><input type="text" placeholder="search here..." name="search" id="search"> </input>
+            <button type="submit"><i class="fa fa-search"></i></button>
+
+        </form>
+    </div>
+    <div class="loginForm" >
+        <a class="#" th:href="@{/logmeout}"><i class="fa fa-fw fa-user"></i> Log-out</a>
+
+    </div>
+
+    <div class="dropdown">
+        <button class="dropbtn"><i class="fa fa-list-ul"></i> Menu
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a th:href="@{/myAllCalculates/page/0}">All calculates</a>
+            <a th:href="@{/myLastCalculate}">Last calculate</a>
+            <a th:href="@{/uploadClients}">Import clients</a>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+<script>
+    let myVar;
+    let myVar1;
+
+    function myFunction() {
+        myVar = showPage();
+        myVar1 = setTimeout(removeDisplay, 9999999);
+    }
+
+    function showPage() {
+
+
+        document.getElementById("loader").style.display = "block";
+
+    }
+    function removeDisplay(){
+        document.getElementById("loader").style.display = "none";
+
+    }
+
+</script>
+
+<script >
+
+    window.onscroll = function() {
+        myFunction1()
+    };
+
+    var navbar = document.getElementById("navbar");
+    var sticky = navbar.offsetTop;
+
+    function myFunction1() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+    }
+
+    window.addEventListener('scroll', stickyNavigation);
+
+</script>
+<!--FORMULARZ DO WYPE ŁNIANIA DANYMI-->
+<div style="padding-left: 16px"></div>
+<div class="content">
+    <form action="#" th:action="@{/search}" th:object="${search}" method="get">
+
+        <div th:if="${message}" class = "success_alert" >
+            <span class="closebtn">&times;</span>
+            <p class="alert_text" th:text="${message}" >success generate pdf</p>
+        </div>
+
+        <div th:if="${failed}" class = "fail_alert">
+            <span class="closebtn" >&times;</span>
+            <p class="alert_text" th:text="${failed}"  >success generate pdf</p>
+        </div>
+        <script>
+            var close = document.getElementsByClassName("closebtn");
+            var i;
+
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function(){
+                    var div = this.parentElement;
+                    div.style.opacity = "0";
+                    setTimeout(function(){ div.style.display = "none"; }, 600);
+                }
+            }
+        </script>
+
+        <script type="text/javascript" src="js/loader.js"></script>
+        <h2 style="font-size: 40px">Details of calculation</h2>
+        <div class="insuranceDetailsContent">
+            <p> Insurance number :   <a th:text="${search.id}"></a> </p>
+            <p> Client name :   <a th:text="${search.clientName}"></a> </p>
+            <p> Client surname :   <a th:text="${search.clientSurname}"></a> </p>
+            <p> Car mark :   <a th:text="${search.carModel}"></a> </p>
+            <p> Car model :   <a th:text="${search.carSubModel}"></a> </p>
+            <p> Year of production :   <a th:text="${search.yearOfProduction}"></a> </p>
+            <p> Fuel type :   <a th:text="${search.fuel}"></a> </p>
+            <p> Capacity :   <a th:text="${search.capacity}"></a> </p>
+            <p> Doors :   <a th:text="${search.doors}"></a> </p>
+            <p> Mileage :   <a th:text="${search.mileage}"></a> </p>
+            <p> Usage:   <a th:text="${search.usage}"></a> </p>
+            <p> Damages:   <a th:text="${search.damage}"></a> </p>
+            <p> Calculation made by :   <a th:text="${search.actualUser}"></a> </p><br>
+            <p><b> Final price :   <a th:text="${search.price}"></a></b> </p>
+
+        </div>
+
+
+    </form>
+    <div th:unless="${is_pdf_present}">
+        <a  onclick="myFunction()" th:href="@{/generatePDF/{id}(id=${search.id})}" class="button" > Generate insurance as PDF</a> <br>
+    </div>
+    <div  th:if="${is_pdf_present}">
+        <a  th:href="@{/downloadInsurance/pdf/insurance_number/{id}(id=${search.id})}" class="pdfButton" > Download insurance as PDF</a>
+        <a  onclick="myFunction()" th:href="@{/mail/sendInsuranceById/{id}(id=${search.id})}" class="pdfButton" > Send insurance via mail</a>
+
+    </div>
+
+
+
+</div>
+<div id="loader"></div>
+<!--KONIEC FORMULARZA-->
+<div class="footer">
+    <a class="phone"><i class="fa">&#xf095;</i>
+        +48 111 222 333</a>
+    <a class=contact_mail><i class="fa fa-fw fa-envelope"></i>
+        tania_polisa@oc.pl</a>
+
+</div>
+
+</body>
+
+</html>

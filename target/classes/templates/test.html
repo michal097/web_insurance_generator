@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href=@{/css/style.css} type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+<div class="header">
+    <h1> Insure yourself </h1>
+    <h3> --generator </h3>
+
+</div>
+<!--MENU PASKA GŁOWNEGO -->
+<div class="navbar" id="navbar">
+    <a class="active" th:href=@{/}><i class="fa fa-fw fa-home"></i> Home</a>
+    <a th:href="@{/show}"><i class="fa fa-calculator" aria-hidden="true"></i> Create calculate </a>
+    <a th:href=@{/showCalculate}><i class="fa fa-fw fa-envelope"></i>Send Mail</a>
+
+
+    <div class="search-container">
+        <form action="#" th:action="@{/search}" th:object="${search}" >
+            <label for="search_input"></label><input type="text" placeholder="search here..." name="search" id="search"> </input>
+            <button type="submit"><i class="fa fa-search"></i></button>
+
+
+        </form>
+    </div>
+
+
+    <div class="dropdown">
+        <button class="dropbtn"><i class="fa fa-list-ul"></i> Menu
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a th:href="@{/myAllCalculates/page/0}">All calculates</a>
+            <a th:href="@{/myLastCalculate}">Last calculate</a>
+            <a th:href="@{/uploadClients}">Import clients</a>
+
+        </div>
+    </div>
+
+    <div class="loginForm" >
+        <a class="#" th:href="@{/logmeout}"><i class="fa fa-fw fa-user"></i> Log-out</a>
+
+    </div>
+
+
+
+</div>
+
+<script type="text/javascript" src="js/stickyNav.js"></script>
+
+
+
+<div style="padding-left: 16px"></div>
+
+<div class="content">
+
+    <form action="#" th:action="@{/show}" th:object="${insurance}" method="post">
+
+
+        <table>
+            <tr>
+                <td>Client name:</td>
+                <td><label>
+                    <input type="text" th:field="*{clientName}" />
+                </label></td>
+            </tr>
+            <tr>
+                <td>Client surname:</td>
+                <td><label>
+                    <input type="text" th:field="*{clientSurname}" />
+                </label></td>
+            </tr>
+            <tr>
+                <td>Car model:</td>
+                <td><label>
+                    <input type="text" th:field="*{carModel}" />
+                </label></td>
+            </tr>
+            <tr>
+                <td>Car submodel:</td>
+                <td><label>
+                    <input type="text" th:field="*{carSubModel}" />
+                </label></td>
+            </tr>
+            <tr>
+                <td>Year of production:</td>
+                <td><label>
+                    <input type="number" th:field="*{yearOfProduction}" />
+                </label></td>
+            </tr>
+            <tr>
+                <td>Fuel type:</td>
+                <td><label>
+                    <select name="fuel">
+                        <option value="benzyna" th:field=*{fuel}>petrol</option>
+                        <option value="diesel" th:field=*{fuel} >diesel</option>
+                        <option value="gaz" th:field=*{fuel} >gas</option>
+                    </select>
+                </label></td>
+
+            </tr>
+            <tr>
+                <td>Capacity:</td>
+                <td><label>
+                    <input type="number" step="0.01" th:field="*{capacity}" />
+                </label></td>
+            </tr>
+            <tr>
+
+                <td>Doors:</td>
+                <td><label>
+                    <select name="doors" >
+                        <option value=3 th:field=*{doors} >3</option>
+                        <option value=5 th:field=*{doors} >5</option>
+                    </select>
+                </label></td>
+            </tr>
+            <tr>
+                <td>Mileage:</td>
+                <td><label>
+
+                    <input type="number" th:field="*{mileage}"/>
+                </label></td>
+            </tr>
+            <tr>
+                <td>Usage:</td>
+                <td><label>
+                    <select name="usage" >
+
+                        <option value="private" th:field=*{usage} >private</option>
+                        <option value="professional" th:field=*{usage} >professional</option>
+                    </select>
+                </label></td>
+            </tr>
+            <tr>
+                <td>Age:</td>
+                <td><label>
+                    <input type="number" th:field="*{ageOfUser}"/>
+                </label></td>
+            </tr>
+
+            <tr>
+                <td>Damages: </td>
+                <td><label>
+
+                    <select name="damage" >
+                        <option value=0 th:field=*{damage} >0</option>
+                        <option value=1 th:field=*{damage} >1</option>
+                        <option value=2 th:field=*{damage} >2</option>
+                        <option value=3 th:field=*{damage} >3</option>
+                        <option value=4 th:field=*{damage} >4</option>
+                        <option value=5 th:field=*{damage} >5</option>
+                        <option value=6 th:field=*{damage} >5+</option>
+                    </select>
+                </label></td>
+            </tr>
+
+            <tr>
+                <td>
+
+
+                </td>
+            </tr>
+        </table>
+        <p>
+            <input type="submit" value="Calculate" />
+            <input type="reset" value="Reset">
+        </p>
+        <div class="errors">
+        <p  th:errors="*{clientName}" style=" color: #FF2133">err</p>
+        <p  th:errors="*{clientSurname}" style=" color: #FF2133" >err</p>
+        <p  th:errors="*{carModel}" style=" color: #FF2133" >err</p>
+        <p  th:errors="*{carSubModel}" style=" color: #FF2133" >err</p>
+        <p  th:errors="*{yearOfProduction}" style=" color: #FF2133" >err</p>
+        <p  th:errors="*{capacity}" style=" color: #FF2133">err</p>
+        <p  th:errors="*{doors}" style=" color: #FF2133" >err</p>
+        <p  th:errors="*{mileage}" style=" color: #FF2133" >err</p>
+        <p  th:errors="*{usage}" style=" color: #FF2133" >err</p>
+        <p  th:errors="*{ageOfUser}" style=" color: #FF2133" >err</p>
+        <p  th:errors="*{damage}" style=" color: #FF2133" >err</p>
+        </div>
+    </form>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+<div class="footer">
+    <a class="phone"><i class="fa">&#xf095;</i>
+        +48 111 222 333</a>
+    <a class=contact_mail><i class="fa fa-fw fa-envelope"></i>
+        tania_polisa@oc.pl</a>
+</div>
+
+</body>
+
+</html>

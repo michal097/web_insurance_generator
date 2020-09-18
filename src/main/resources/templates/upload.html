@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Moja appka</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href=@{/css/style.css} type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+</head>
+
+<body>
+<div class="header">
+    <h1> Insure yourself </h1>
+    <h3> --generator </h3>
+
+</div>
+
+<!--MENU PASKA GŁOWNEGO -->
+<div class="navbar" id="navbar">
+    <a class="active" th:href="@{/}"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a th:href="@{/show}"><i class="fa fa-calculator" aria-hidden="true"></i> Create calculate </a>
+    <a th:href="@{/showCalculate}"><i class="fa fa-fw fa-envelope"></i>Send Mail</a>
+
+
+    <!--    JEBANE POLE WYSZUKIWANIA   -->
+    <div class="search-container">
+        <form action="#" th:action="@{/search}" th:object="${search}" >
+            <label for="search_input"></label><input type="text" placeholder="search here..." name="search" id="search"> </input>
+            <button type="submit"><i class="fa fa-search"></i></button>
+
+        </form>
+    </div>
+    <div class="loginForm" >
+        <a class="#" th:href="@{/logmeout}"><i class="fa fa-fw fa-user"></i> Log-out</a>
+
+    </div>
+
+    <!--ROZWIJANE MENU-->
+    <div class="dropdown">
+        <button class="dropbtn"><i class="fa fa-list-ul"></i> Menu
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a th:href="@{/myAllCalculates/page/0}">All calculates</a>
+            <a th:href="@{/myLastCalculate}">Last calculate</a>
+            <a th:href="@{/uploadClients}">Import clients</a>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<script type="text/javascript" src="js/stickyNav.js"></script>
+
+<!--FORMULARZ DO WYPE ŁNIANIA DANYMI-->
+<div style="padding-left: 16px"></div>
+<div class="content" style="font-size: 30px;">
+
+    <div th:if="${message}" class = "success_alert">
+        <span class="closebtn">&times;</span>
+        <p class="alert_text" th:text="${message}" >success generate pdf</p>
+    </div>
+
+    <div th:if="${failed}" class = "fail_alert">
+        <span class="closebtn" >&times;</span>
+        <p class="alert_text" th:text="${failed}"  >success generate pdf</p>
+    </div>
+
+    <script type="text/javascript" src="js/loader.js"></script>
+    <script>
+        const close = document.getElementsByClassName("closebtn");
+        let i;
+
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function(){
+                const div = this.parentElement;
+                div.style.opacity = "0";
+                setTimeout(function(){ div.style.display = "none"; }, 600);
+            }
+        }
+    </script>
+    <h4>Upload multi clients to calculate an insurance:</h4>
+    <form method="POST" th:action="@{/uploadFile}" enctype="multipart/form-data">
+
+
+        <label for="uploadfile" class = "button2">Choose file to upload</label>
+        <input type="file" name="file" class = "upload" id ="uploadfile"  >
+        <button class= "button" type="submit"  >Submit</button>
+
+        <p>You have choosen: <span id="file-selected" class = "file_path"></span> </p>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+        <script>
+            $('#uploadfile').bind('change', function() {
+                var fileName = '';
+                fileName = $(this).val();
+                $('#file-selected').html(fileName); })
+        </script>
+<div style="text-align: center ">
+        <p> Wanna draft for import? Download it here:
+            <a  th:href="@{/downloadCsvDraft}" class="pdfButton" > Download draft</a>
+        </p>
+</div>
+
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</div>
+<!--KONIEC FORMULARZA-->
+<div class="footer">
+    <a class="phone"><i class="fa">&#xf095;</i>
+        +48 111 222 333</a>
+    <a class=contact_mail><i class="fa fa-fw fa-envelope"></i>
+        tania_polisa@oc.pl</a>
+
+</div>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Moja appka</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href=@{/css/style.css} type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+</head>
+
+<body>
+<div class="header">
+    <h1> Insure yourself </h1>
+    <h3> --generator </h3>
+</div>
+
+
+
+
+<div class="navbar" id="navbar">
+    <a class="active" th:href="@{/}"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a th:href="@{/show}"><i class="fa fa-calculator" aria-hidden="true"></i> Create calculate </a>
+    <a th:href="@{/showCalculate}"><i class="fa fa-fw fa-envelope"></i>Send Mail</a>
+
+
+
+    <div class="search-container">
+        <form action="#" th:action="@{/search}" th:object="${search}" >
+            <label for="search_input"></label><input type="text" placeholder="search here..." name="search" id="search"> </input>
+            <button type="submit"><i class="fa fa-search"></i></button>
+
+        </form>
+    </div>
+    <div class="loginForm" >
+        <a class="#" th:href="@{/logmeout}"><i class="fa fa-fw fa-user"></i> Log-out</a>
+
+    </div>
+
+
+    <div class="dropdown">
+        <button class="dropbtn"><i class="fa fa-list-ul"></i> Menu
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a th:href="@{/myAllCalculates/page/0}">All calculates</a>
+            <a th:href="@{/myLastCalculate}">Last calculate</a>
+            <a th:href="@{/uploadClients}">Import clients</a>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+<script type="text/javascript" src="js/stickyNav.js"></script>
+
+<div style="padding-left: 16px"></div>
+<div class="content">
+    <form action="#" th:action="@{/search}" th:object="${search}" method="get">
+
+        <div th:if="${message}" class="success_alert">
+            <span class="closebtn">&times;</span>
+            <p  class="alert_text" th:text="${message}" >success generate pdf</p>
+        </div>
+
+        <div th:if="${failed}" class = "fail_alert">
+            <span class="closebtn" >&times;</span>
+            <p class="alert_text" th:text="${failed}"  >success generate pdf</p>
+        </div>
+
+        <script type="text/javascript" src="js/loader.js"></script>
+        <script>
+            var close = document.getElementsByClassName("closebtn");
+            var i;
+
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function(){
+                    var div = this.parentElement;
+                    div.style.opacity = "0";
+                    setTimeout(function(){ div.style.display = "none"; }, 600);
+                }
+            }
+        </script>
+
+        <div th:if="${not #lists.isEmpty(search)}">
+            <h2>Summary of the last calculation</h2>
+            <table id="insurance_table">
+                <thead>
+                <tr>
+                    <th>Insurance number</th>
+                    <th>Client name</th>
+                    <th>Client surname</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Price</th>
+                    <th>Calculation made by</th>
+                    <th>Generate insurance</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="search : ${search}">
+                    <td th:text="${search.id}">Text ...</td>
+                    <td th:text="${search.clientName}">Text ...</td>
+                    <td th:text="${search.clientSurname}">Text ...</td>
+                    <td th:text="${search.carModel}">Text ...</td>
+                    <td th:text="${search.carSubModel}">Text ...</td>
+                    <td th:text="${search.price}">Text ...</td>
+                    <td th:text="${search.actualUser}">Text ...</td>
+                    <td> <a  onclick="myFunction()" id="mailSender" th:href="@{/mail/sendInsuranceById/{id}(id=${search.id})}" class="button4" > Generate and send mail</a></td>
+
+                </tr>
+                </tbody>
+
+            </table>
+
+            <br>
+
+            <div id="loader">
+
+            </div>
+
+            <button class=button1 onclick="location.href='/show'" type="button">
+                Calculate again</button>
+        </div>
+
+    </form>
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+</div>
+
+<div class="footer">
+    <a class="phone"><i class="fa">&#xf095;</i>
+        +48 111 222 333</a>
+    <a class=contact_mail><i class="fa fa-fw fa-envelope"></i>
+        tania_polisa@oc.pl</a>
+
+</div>
+
+</body>
+
+</html>

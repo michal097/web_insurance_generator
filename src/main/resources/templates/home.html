@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Moja appka</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!--    <link rel="stylesheet" th:href=@{/css/style.css} type="text/css">-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<style>
+    html, body {
+        margin: 0;
+        height: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #383838;
+        color: white;
+
+
+    }
+    select {
+        width: 100%;
+    }
+
+
+    input, select {
+        color:white;
+        background-color: #686868;
+
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    input::placeholder {
+        color: white;
+    }
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type=reset] {
+        width: 100%;
+        background-color: #FF2133;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+    input[type=reset]:hover {
+        background-color: #FF001E;
+    }
+    .header {
+        font-family: Consolas, Helvetica, sans-serif, Arial;
+        padding: 20px;
+        text-align: center;
+        /*background-image: url("https://cdn.pixabay.com/photo/2015/10/30/12/45/banner-1014109_960_720.jpg");*/
+        background-color: #923cb5;
+        background-image: linear-gradient(147deg, #923cb5 0%, #000000 74%);
+        color: white;
+        font-size: 15px;
+
+    }
+
+    .navbar {
+        overflow: auto;
+        background-image: linear-gradient(to right, rgb(38, 38, 38), rgb(38, 38, 38));
+        box-shadow: 10px 10px 50px 0.5px #3d1664;
+    }
+
+    .navbar a {
+        float: left;
+        font-size: 17px;
+        color: #ffffff;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .navbar a.active {
+        background-image: linear-gradient(147deg, #923cb5 0%, #000000 74%);
+        color:  white;
+    }
+
+    .navbar a.active:hover {
+        background-color:  #3715bc;
+    }
+
+
+
+    .navbar .search-container {
+        float: right;
+    }
+
+    .loginForm {
+        float: right;
+    }
+
+    .navbar input[type=text] {
+        padding: 6px;
+        margin-top: 8px;
+        font-size: 17px;
+        border: none;
+    }
+
+
+
+    .navbar .search-container button {
+        float: right;
+        padding: 6px 10px;
+        margin-top: 8px;
+        margin-right: 16px;
+        background: #919191;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .navbar .search-container button:hover {
+        background: #ccc;
+    }
+
+    .dropdown {
+        float: left;
+        overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 17px;
+        text-align: left;
+        width: 160px;
+        border: none;
+        outline: none;
+        color: rgb(255, 255, 255);
+        padding: 14px 16px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+    }
+
+    .navbar a:hover,
+    .dropdown:hover .dropbtn {
+        background-color:  #3715bc;
+        color: rgb(255, 255, 255);
+        cursor: pointer;
+    }
+
+    .dropdown-content {
+        display: none;
+        background-color: rgb(38, 38, 38);
+        min-width: 160px;
+        box-shadow:  #3715bc;
+        z-index: 1;
+
+    }
+
+    .dropdown-content a {
+        float: none;
+        position: sticky;
+        color: rgba(255, 255, 255, 1);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+
+    }
+
+    .dropdown-content a:hover {
+        background-color:  #3715bc;
+
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .content {
+        padding: 16px;
+        min-height: 100%;
+    }
+
+    .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    .sticky+.content {
+
+        min-height: 100%;
+    }
+    .content-inside {
+        padding: 20px;
+        padding-bottom: 50px;
+    }
+
+    .footer {
+
+        height: 50px;
+        margin-top: -50px;
+        background-image: linear-gradient(to right, rgb(38, 38, 38), rgb(38, 38, 38));
+
+    }
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+
+
+    }
+    .button1 {
+        background-color: #FF2133; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+
+
+    }
+
+    .button:hover {
+        background-color: #45a049;
+    }
+    .button1:hover {
+        background-color: #FF001E;
+    }
+    footer {
+        background: #42A5F5;
+        color: white;
+        line-height: 50px;
+        padding: 0 20px;
+    }
+
+
+    #insurance_table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #insurance_table td, #insurance_table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #insurance_table tr:nth-child(even){background-color: #686868;}
+
+
+
+    #insurance_table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+    .footer a{
+        font-size:25px;
+
+    }
+
+    .phone{
+
+        float: left;
+        margin-left:100px;
+        margin-top:10px;
+
+    }
+    .contact_mail{
+        float: right;
+        margin-right:100px;
+        margin-top:10px;
+
+    }
+
+</style>
+
+</head>
+
+<body>
+<div class="header">
+    <h1> Insure yourself </h1>
+    <h3> --generator </h3>
+
+</div>
+
+
+
+
+<div class="navbar" id="navbar">
+    <a class="active" th:href="@{/}"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a th:href="@{/show}"><i class="fa fa-calculator" aria-hidden="true"></i> Create calculate </a>
+    <a th:href="@{/showCalculate}"><i class="fa fa-fw fa-envelope"></i>Send Mail</a>
+
+
+    <div class="search-container">
+        <form action="#" th:action="@{/search}" th:object="${search}" >
+            <label for="search_input"></label><input type="text" placeholder="search here..." name="search" id="search"> </input>
+            <button type="submit"><i class="fa fa-search"></i></button>
+
+        </form>
+    </div>
+    <div class="loginForm" >
+        <a class="#" th:href="@{/loginform}"><i class="fa fa-fw fa-user"></i> Login</a>
+    </div>
+
+
+    <div class="dropdown">
+        <button class="dropbtn"><i class="fa fa-list-ul"></i> Menu
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a th:href="@{/myAllCalculates/page/0}">All calculates</a>
+            <a th:href="@{/myLastCalculate}">Last calculate</a>
+            <a th:href="@{/uploadClients}">Import clients</a>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+<script>
+    window.onscroll = function() {
+        myFunction1()
+    };
+
+    var navbar = document.getElementById("navbar");
+    var sticky = navbar.offsetTop;
+
+    function myFunction1() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+    }
+
+    window.addEventListener('scroll', stickyNavigation);
+
+</script>
+
+<div style="padding-left: 16px"></div>
+<div class="content">
+<div class="wrap_home_content">
+    <h1>Welcome to the website generating the calculation of insurance documents</h1>
+    <p>Among other things, the website enables</p>
+    <ul>
+        <li>make insurance calculation</li>
+        <li>send calculation via mail</li>
+        <li>generate insurance as pdf and download it</li>
+        <li>import clients through .csv file and automatically create calculation </li>
+        <li>viewing made calculations</li>
+
+    </ul>
+    <h2>You must log in to use the generator</h2>
+</div>
+</div>
+
+<div class="footer">
+    <a class="phone"><i class="fa">&#xf095;</i>
+        +48 111 222 333</a>
+    <a class=contact_mail herf="mail.google.pl"><i class="fa fa-fw fa-envelope"></i>
+        tania_polisa@oc.pl</a>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        body{
+            padding-bottom:100px;
+            background-color: #282828;
+            color: white;
+        }
+        p{
+            font-size: 14px;
+            padding-left: 2%;
+        }
+
+        .content_border{
+            border-style: solid;
+            border-left-color: green;
+            line-height: 80%;
+        }
+        .image{
+            padding-top: 0;
+        }
+        .topbar{
+            line-height: 40%;
+        }
+        .footer{
+            position: absolute;
+            width: 50%;
+            bottom: 10px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<div class="image"><img src="https://i.ibb.co/QHBqDfM/insurance.jpg" alt="Lamp" width="300" height="200"></div>
+<h1 style="text-align:center">Insurance number [[${data.getId()}]] </h1>
+<div class="topbar">
+    <p style="font-size: 20px"> Dear Sir or Madam  </p>
+    <p style="font-size: 18px">[[${data.getClientName()}]] [[${data.getClientSurname()}]] </p>
+</div>
+<br>
+<p>
+    Thank you for choosing our services and generating insurance document. You will find document including insurance data below.
+</p>
+<div class="content_border">
+
+    <p> Fuel: [[${data.getFuel()}]] </p>
+    <p> Engine capacity:
+        <b> [[${data.getCapacity()}]]</b> </p>
+    <p>Number of doors :
+        <b> [[${data.getDoors()}]] </b> </p>
+    <p>Mileage:
+        <b>[[${data.getMileage()}]]</b> </p>
+    <p>Usage purpose:
+        <b> [[${data.getUsage()}]]</b> </p>
+    <p>User age:
+        <b> [[${data.getAgeOfUser()}]]</b> </p>
+</div>
+
+<h2>
+
+    INSURANCE PRICE
+</h2>
+<div class="content_border">
+    <p>Price: <b> [[${data.getPrice()}]]</b> </p>
+</div>
+<p><b>Best regards,</b></p>
+
+<p>Insurance Corp.</p>
+
+<br>
+
+<div class="footer">
+
+    <p style="font-size: 10px"> Insurance corp. is not responsible for failure to pay insurance </p>
+
+
+</div>
+
+</body>
+
+</html>
