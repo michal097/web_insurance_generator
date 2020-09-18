@@ -107,7 +107,10 @@
 
 
     <form action="#" th:action="@{/pagination}" th:object="${pagination}" method="get">
-
+        <div th:if="${#lists.isEmpty(pagination)}">
+            <p>There is no customer information, </p>
+            <p>please make a calculation or import clients </p>
+        </div>
         <div th:if="${not #lists.isEmpty(pagination)}">
             <h2>Calculate result</h2>
             <table id="insurance_table">
@@ -140,6 +143,19 @@
                 </tbody>
 
             </table>
+
+            <div class="pagination_content">
+                <a th:href="@{/myAllCalculates/page/0}" class="button1" style="font-size: 30px; "> first </a>
+                <a th:href="@{/myAllCalculates/page/{pagination}(pagination=${pag>0}?${pag-1}:${pag})}" class="button1" style="font-size: 30px; "> << </a>
+                <a th:href="@{/myAllCalculates/page/{pagination}(pagination=${pag<pagin-1}?${pag+1}:${pag})}" class="button1"style="font-size: 30px;" > >> </a>
+                <a th:href="@{/myAllCalculates/page/{pagination}(pagination=${pagin-1})}" class="button1" style="font-size: 30px; "> last </a>
+            </div>
+            <div class="pagination_counter">
+                <a th:text="${pag+1}"></a> <a>/</a>
+                <a th:text="${pagin}"></a>
+
+            </div>
+
         </div>
 
     </form>
@@ -149,17 +165,6 @@
     <br>
     <br>
 
-    <div class="pagination_content">
-        <a th:href="@{/myAllCalculates/page/0}" class="button1" style="font-size: 30px; "> first </a>
-        <a th:href="@{/myAllCalculates/page/{pagination}(pagination=${pag>0}?${pag-1}:${pag})}" class="button1" style="font-size: 30px; "> << </a>
-        <a th:href="@{/myAllCalculates/page/{pagination}(pagination=${pag<pagin-1}?${pag+1}:${pag})}" class="button1"style="font-size: 30px;" > >> </a>
-        <a th:href="@{/myAllCalculates/page/{pagination}(pagination=${pagin-1})}" class="button1" style="font-size: 30px; "> last </a>
-    </div>
-<div class="pagination_counter">
-    <a th:text="${pag+1}"></a> <a>/</a>
-    <a th:text="${pagin}"></a>
-
-</div>
 
 </div>
 
