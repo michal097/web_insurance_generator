@@ -4,7 +4,6 @@ package pl.mikel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
-import java.util.Collections;
 
 
 @SpringBootApplication
@@ -12,9 +11,6 @@ import java.util.Collections;
 public class MikeleApplication  {
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(MikeleApplication.class);
-        springApplication.setDefaultProperties(Collections.singletonMap("server.port", "9990"));
-        springApplication.run(args);
+        SpringApplication.run(MikeleApplication.class);
     }
-
 }
