@@ -6,7 +6,7 @@ Application additionally allows you to view clients and you can regenerate the d
 To use the application it is necessary to log in or register.<br />
 It is also possible to import customer data using a .csv file, it is available for download in the import_clients tab.<br />
 <br />
-Yechnologies used in the project:<br />
+Technologies used in the project:<br />
 <br />
 -Java <br />
 -Spring Boot<br />
