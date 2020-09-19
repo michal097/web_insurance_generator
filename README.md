@@ -13,10 +13,13 @@ Technologies used in the project:<br />
 -Spring Security<br />
 -Spring MVC<br />
 -Hibernate search <br />
+-Maven <br />
 -Spring Data JPA<br />
 -Thymeleaf<br />
 -JavaScript<br />
 -HTML<br />
 -CSS<br />
+<br />
+Database: PostgreSQL
 <br />
 Application is available at: https://web-insurance-generator.herokuapp.com/
